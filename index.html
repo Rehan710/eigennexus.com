@@ -1,0 +1,910 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Eigennexus</title>
+<meta name="description" content="Independent ML and AI consulting. Where mathematical rigour meets business reality.">
+
+<!-- Google Analytics — replace G-XXXXXXXXXX with your Measurement ID -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-XXXXXXXXXX');
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root {
+  --black:   #0c0d0f;
+  --dark:    #161820;
+  --charcoal:#23262e;
+  --border:  #2e3139;
+  --muted:   #5a5f6e;
+  --body:    #9aa0b0;
+  --light:   #c8cdd8;
+  --white:   #f0ede8;
+  --teal:    #00c2b3;
+  --teal-dim:#00c2b315;
+  --teal-bd: #00c2b328;
+  --serif:   'Cormorant Garamond', Georgia, serif;
+  --sans:    'Instrument Sans', system-ui, sans-serif;
+  --mono:    'JetBrains Mono', monospace;
+}
+
+html { scroll-behavior:smooth; font-size:16px; }
+
+body {
+  font-family: var(--sans);
+  background: var(--black);
+  color: var(--body);
+  line-height: 1.6;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── NAV ── */
+nav {
+  position: fixed; top:0; left:0; right:0; z-index:90;
+  display: flex; align-items:center; justify-content:space-between;
+  padding: 1.5rem 4rem;
+  transition: padding .3s ease, background .3s ease, border-color .3s ease;
+  border-bottom: 1px solid transparent;
+}
+nav.stuck {
+  padding: 1rem 4rem;
+  background: rgba(12,13,15,.92);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom-color: var(--border);
+}
+.nav-logo img { height:38px; width:auto; display:block; mix-blend-mode:screen; }
+.nav-links { display:flex; align-items:center; gap:3rem; list-style:none; }
+.nav-links a {
+  font-size: .75rem; font-weight:500; letter-spacing:.1em;
+  text-transform:uppercase; color: var(--muted); text-decoration:none;
+  transition:color .2s;
+}
+.nav-links a:hover { color:var(--white); }
+.nav-book {
+  color: var(--white) !important;
+  border: 1px solid var(--border) !important;
+  padding: .45rem 1.1rem;
+  border-radius: 2px;
+  transition: border-color .2s !important, color .2s !important;
+}
+.nav-book:hover { border-color:var(--teal) !important; color:var(--teal) !important; }
+
+/* ── SECTION BASE ── */
+section { padding: 7rem 4rem; }
+.inner { max-width:1140px; margin:0 auto; }
+
+.tag {
+  display:inline-flex; align-items:center; gap:.6rem;
+  font-family:var(--mono); font-size:.65rem; font-weight:500;
+  letter-spacing:.14em; text-transform:uppercase; color:var(--teal);
+  margin-bottom:1.75rem;
+}
+.tag::before {
+  content:''; display:block; width:20px; height:1px; background:var(--teal);
+}
+
+h2.head {
+  font-family: var(--serif);
+  font-size: clamp(2.4rem, 4.5vw, 3.75rem);
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: -.01em;
+  color: var(--white);
+  margin-bottom: 1.25rem;
+}
+h2.head em { font-style:italic; color:var(--teal); }
+
+.lead {
+  font-size: 1.05rem;
+  line-height: 1.8;
+  color: var(--body);
+  font-weight: 400;
+  max-width: 520px;
+}
+
+/* ── HERO ── */
+.hero {
+  min-height: 100vh;
+  display:flex; align-items:center;
+  padding: 8rem 4rem 5rem;
+  position:relative; overflow:hidden;
+}
+.hero-wrap {
+  max-width:1140px; margin:0 auto; width:100%;
+  display:grid; grid-template-columns:1fr 1fr; gap:5rem; align-items:center;
+}
+.hero-kicker {
+  display:flex; align-items:center; gap:.75rem; margin-bottom:2rem;
+}
+.kicker-line { width:28px; height:1px; background:var(--teal); }
+.kicker-text {
+  font-family:var(--mono); font-size:.65rem; font-weight:500;
+  letter-spacing:.14em; text-transform:uppercase; color:var(--teal);
+}
+.hero-h1 {
+  font-family: var(--serif);
+  font-size: clamp(3rem, 5.5vw, 5rem);
+  font-weight: 400;
+  line-height: 1.06;
+  letter-spacing: -.015em;
+  color: var(--white);
+  margin-bottom: 1.5rem;
+}
+.hero-h1 em { font-style:italic; color:var(--teal); }
+.hero-p {
+  font-size: 1.0625rem;
+  line-height: 1.8;
+  color: var(--body);
+  max-width: 460px;
+  margin-bottom: 2.5rem;
+}
+.btn-row { display:flex; gap:1rem; align-items:center; }
+.btn-fill {
+  display:inline-flex; align-items:center; gap:.5rem;
+  background:var(--teal); color:var(--black);
+  padding:.8rem 1.75rem;
+  font-size:.875rem; font-weight:600; letter-spacing:.03em;
+  text-decoration:none; border-radius:2px;
+  transition:opacity .2s, transform .2s;
+}
+.btn-fill:hover { opacity:.88; transform:translateY(-1px); }
+.btn-line {
+  display:inline-flex; align-items:center; gap:.4rem;
+  color:var(--muted); font-size:.875rem; text-decoration:none;
+  border-bottom:1px solid var(--border); padding-bottom:.15rem;
+  transition:color .2s, border-color .2s;
+}
+.btn-line:hover { color:var(--white); border-color:var(--muted); }
+
+/* Hero right: data strip */
+.hero-data { display:flex; flex-direction:column; gap:.875rem; }
+.data-card {
+  border: 1px solid var(--border);
+  border-left: 2px solid var(--teal);
+  background: var(--dark);
+  padding: 1.25rem 1.5rem;
+  display:flex; justify-content:space-between; align-items:center;
+  transition:border-color .25s;
+}
+.data-card:hover { border-color:var(--teal); }
+.data-n {
+  font-family:var(--serif); font-size:2.125rem; font-weight:400;
+  color:var(--white); line-height:1;
+}
+.data-n sup { font-size:1rem; color:var(--teal); vertical-align:super; }
+.data-lbl {
+  font-size:.8375rem; font-weight:400; color:var(--body); line-height:1.55;
+  text-align:right; max-width:190px; letter-spacing:.01em;
+}
+
+/* glow blob */
+.hero::after {
+  content:''; position:absolute; right:-15%; top:-20%;
+  width:60vw; height:90vh;
+  background:radial-gradient(ellipse at 70% 30%, rgba(0,194,179,.06) 0%, transparent 60%);
+  pointer-events:none; z-index:0;
+}
+.hero-wrap { position:relative; z-index:1; }
+
+/* ── PROBLEM ── */
+.problem { background: var(--dark); border-top:1px solid var(--border); border-bottom:1px solid var(--border); }
+.problem-grid {
+  display:grid; grid-template-columns:1fr 1fr; gap:5rem; align-items:start; margin-top:3.5rem;
+}
+.prob-item {
+  display:grid; grid-template-columns:2.5rem 1fr; gap:1rem; padding:1.75rem 0;
+  border-bottom:1px solid var(--border); align-items:start;
+}
+.prob-item:first-child { border-top:1px solid var(--border); }
+.prob-n {
+  font-family:var(--mono); font-size:.625rem; font-weight:500;
+  color:var(--teal); letter-spacing:.12em; padding-top:.25rem;
+}
+.prob-title { font-size:.9375rem; font-weight:600; color:var(--white); margin-bottom:.4rem; }
+.prob-text  { font-size:.875rem; color:var(--muted); line-height:1.7; }
+.stats-stack { display:flex; flex-direction:column; gap:1rem; }
+.stat-box {
+  background:var(--charcoal); border:1px solid var(--border);
+  padding:1.75rem 1.5rem; border-radius:2px;
+}
+.stat-big {
+  font-family:var(--serif); font-size:2.75rem; font-weight:300;
+  color:var(--white); line-height:1; margin-bottom:.3rem;
+}
+.stat-big em { font-style:normal; color:var(--teal); }
+.stat-src {
+  font-size:.9rem; color:var(--light); line-height:1.65;
+  font-weight:400; margin-top:.5rem;
+}
+
+/* ── HOW IT WORKS ── */
+.how { background:var(--black); }
+.how-grid {
+  display:grid; grid-template-columns:1fr 1.1fr; gap:5rem; margin-top:3.5rem; align-items:start;
+}
+.step {
+  display:grid; grid-template-columns:2.5rem 1fr; gap:1rem;
+  padding:1.5rem 0; border-bottom:1px solid var(--border);
+}
+.step:first-of-type { border-top:1px solid var(--border); }
+.step-n { font-family:var(--mono); font-size:.625rem; font-weight:500; color:var(--teal); letter-spacing:.12em; padding-top:.2rem; }
+.step-title { font-size:.8125rem; font-weight:600; letter-spacing:.06em; text-transform:uppercase; color:var(--light); margin-bottom:.3rem; }
+.step-text  { font-size:.875rem; color:var(--muted); line-height:1.7; }
+.delivs { display:flex; flex-direction:column; gap:.625rem; }
+.deliv {
+  display:grid; grid-template-columns:1.25rem 1fr; gap:.875rem; align-items:start;
+  padding:1rem 1.125rem; background:var(--dark); border:1px solid var(--border);
+  border-radius:2px; transition:border-color .2s;
+}
+.deliv:hover { border-color:var(--teal-bd); }
+.deliv-tick { color:var(--teal); font-size:.8125rem; font-weight:700; line-height:1.6; }
+.deliv-name { font-size:.875rem; font-weight:600; color:var(--light); margin-bottom:.175rem; }
+.deliv-desc { font-size:.8rem; color:var(--muted); line-height:1.6; }
+
+/* ── QUOTE BAND ── */
+.quote-band {
+  background:var(--charcoal); border-top:1px solid var(--border); border-bottom:1px solid var(--border);
+  padding:4.5rem 4rem;
+}
+.quote-inner {
+  max-width:1140px; margin:0 auto;
+  display:grid; grid-template-columns:1fr auto; gap:4rem; align-items:center;
+}
+.q-text {
+  font-family:var(--serif); font-size:clamp(1.25rem,2.2vw,1.625rem);
+  font-weight:300; font-style:italic; color:var(--white); line-height:1.6;
+}
+.q-text::before { content:open-quote; color:var(--teal); margin-right:.1em; }
+.q-text::after  { content:close-quote; color:var(--teal); margin-left:.1em; }
+.q-metrics { display:flex; gap:3rem; flex-shrink:0; }
+.q-m { text-align:center; }
+.q-n {
+  font-family:var(--serif); font-size:2.25rem; font-weight:400;
+  color:var(--teal); line-height:1; margin-bottom:.3rem;
+}
+.q-l { font-size:.675rem; font-weight:500; letter-spacing:.08em; text-transform:uppercase; color:var(--muted); line-height:1.5; }
+
+/* ── INDUSTRIES ── */
+.industries { background:var(--dark); border-top:1px solid var(--border); }
+.ind-grid {
+  display:grid; grid-template-columns:repeat(3,1fr); gap:1px;
+  background:var(--border); margin-top:3.5rem;
+  border:1px solid var(--border);
+}
+.ind-card {
+  background:var(--dark); padding:2rem 1.75rem;
+  transition:background .25s;
+  cursor:default;
+}
+.ind-card:hover { background:var(--charcoal); }
+.ind-rate {
+  font-family:var(--mono); font-size:.6rem; font-weight:500;
+  letter-spacing:.1em; text-transform:uppercase;
+  color:var(--teal); margin-bottom:.875rem;
+}
+.ind-name {
+  font-family:var(--serif); font-size:1.375rem; font-weight:400;
+  color:var(--white); margin-bottom:.625rem; line-height:1.25;
+}
+.ind-desc { font-size:.8375rem; color:var(--muted); line-height:1.7; }
+
+/* ── ABOUT ── */
+.about { background:var(--black); }
+.about-grid {
+  display:grid; grid-template-columns:1fr 1fr; gap:5rem; align-items:start; margin-top:3.5rem;
+}
+.creds {
+  display:grid; grid-template-columns:1fr 1fr; gap:1px;
+  background:var(--border); border:1px solid var(--border);
+}
+.cred {
+  background:var(--dark); padding:1.75rem 1.5rem; text-align:center;
+}
+.cred-n {
+  font-family:var(--serif); font-size:2.25rem; font-weight:400;
+  color:var(--white); line-height:1; margin-bottom:.3rem;
+}
+.cred-n em { font-style:normal; color:var(--teal); }
+.cred-l { font-size:.7rem; font-weight:500; letter-spacing:.07em; text-transform:uppercase; color:var(--muted); line-height:1.5; }
+.about-p { font-size:.9375rem; line-height:1.85; color:var(--body); margin-bottom:1.25rem; }
+.about-p strong { color:var(--light); font-weight:500; }
+.pilot-box {
+  margin-top:1.75rem; padding:1.5rem;
+  background:var(--dark); border:1px solid var(--border);
+  border-left:2px solid var(--teal);
+}
+.pilot-tag {
+  font-family:var(--mono); font-size:.6rem; font-weight:500; letter-spacing:.12em;
+  text-transform:uppercase; color:var(--teal); margin-bottom:.625rem;
+}
+.pilot-text { font-size:.9rem; color:var(--muted); line-height:1.75; }
+.pilot-text strong { color:var(--light); font-weight:500; }
+
+/* ── CONTACT ── */
+.contact { background:var(--dark); border-top:1px solid var(--border); }
+.contact-grid {
+  display:grid; grid-template-columns:1fr 1fr; gap:5rem; margin-top:3.5rem; align-items:start;
+}
+.contact-p { font-size:.9375rem; line-height:1.85; color:var(--body); margin-bottom:2rem; }
+.c-detail {
+  display:flex; align-items:center; gap:.875rem;
+  padding:.875rem 1rem; background:var(--charcoal); border:1px solid var(--border);
+  margin-bottom:.625rem; border-radius:2px;
+  transition:border-color .2s;
+}
+.c-detail:hover { border-color:var(--teal-bd); }
+.c-icon {
+  width:30px; height:30px; background:var(--teal-dim); border:1px solid var(--teal-bd);
+  border-radius:2px; display:flex; align-items:center; justify-content:center; flex-shrink:0;
+}
+.c-icon svg { width:13px; height:13px; stroke:var(--teal); fill:none; stroke-width:1.5; stroke-linecap:round; stroke-linejoin:round; }
+.c-txt { font-size:.875rem; color:var(--light); }
+.c-txt a { color:inherit; text-decoration:none; transition:color .2s; }
+.c-txt a:hover { color:var(--teal); }
+.form-box {
+  background:var(--charcoal); border:1px solid var(--border);
+  padding:2.25rem; border-radius:2px;
+}
+.form-box h3 {
+  font-family:var(--serif); font-size:1.5rem; font-weight:400;
+  color:var(--white); margin-bottom:1.75rem;
+}
+.f-row { margin-bottom:1rem; }
+.f-row label {
+  display:block; font-size:.675rem; font-weight:500; letter-spacing:.1em;
+  text-transform:uppercase; color:var(--muted); margin-bottom:.4rem;
+}
+.f-row input, .f-row select, .f-row textarea {
+  width:100%; padding:.75rem .875rem;
+  background:var(--dark); border:1px solid var(--border);
+  color:var(--light); font-family:var(--sans); font-size:.9rem;
+  border-radius:2px; outline:none; transition:border-color .2s;
+  -webkit-appearance:none;
+}
+.f-row input::placeholder, .f-row textarea::placeholder { color:var(--muted); }
+.f-row input:focus, .f-row select:focus, .f-row textarea:focus { border-color:var(--teal); }
+.f-row textarea { resize:vertical; min-height:88px; }
+.f-row select option { background:var(--dark); }
+.f-submit {
+  width:100%; background:var(--teal); color:var(--black);
+  border:none; padding:.875rem;
+  font-family:var(--sans); font-size:.875rem; font-weight:600; letter-spacing:.04em;
+  cursor:pointer; border-radius:2px;
+  transition:opacity .2s; margin-top:.25rem;
+}
+.f-submit:hover { opacity:.85; }
+.f-success {
+  display:none; text-align:center; padding:2.5rem 1rem;
+}
+.f-success-icon { font-size:2rem; margin-bottom:.75rem; }
+.f-success-msg {
+  font-family:var(--serif); font-size:1.375rem; color:var(--teal);
+  margin-bottom:.5rem; font-weight:400;
+}
+.f-success-sub { font-size:.875rem; color:var(--muted); }
+
+/* ── FOOTER ── */
+footer {
+  background:var(--black); border-top:1px solid var(--border);
+  padding:2.5rem 4rem;
+}
+.foot-inner {
+  max-width:1140px; margin:0 auto;
+  display:flex; align-items:center; justify-content:space-between; gap:1rem; flex-wrap:wrap;
+}
+.foot-logo img { height:32px; width:auto; opacity:.9; mix-blend-mode:screen; }
+.foot-tagline { font-family:var(--serif); font-style:italic; font-size:.875rem; color:var(--muted); }
+.foot-copy { font-size:.7rem; color:var(--border); letter-spacing:.05em; }
+
+/* ── FADE ANIMATIONS ── */
+.reveal { opacity:0; transform:translateY(22px); transition:opacity .7s ease, transform .7s ease; }
+.reveal.in { opacity:1; transform:none; }
+.reveal-d1 { transition-delay:.1s; }
+.reveal-d2 { transition-delay:.2s; }
+.reveal-d3 { transition-delay:.3s; }
+.reveal-d4 { transition-delay:.4s; }
+
+/* ── MOBILE ── */
+@media(max-width:900px){
+  section { padding:5rem 1.5rem; }
+  nav { padding:1.1rem 1.5rem; }
+  nav.stuck { padding:.875rem 1.5rem; }
+  .nav-links li:not(:last-child) { display:none; }
+  .hero { padding:7rem 1.5rem 4rem; }
+  .hero-wrap, .problem-grid, .how-grid, .about-grid, .contact-grid { grid-template-columns:1fr; gap:3rem; }
+  .hero-data { order:-1; }
+  .ind-grid { grid-template-columns:1fr; }
+  .q-inner { grid-template-columns:1fr; }
+  .q-metrics { gap:1.75rem; }
+  .quote-band { padding:3.5rem 1.5rem; }
+  footer { padding:2rem 1.5rem; }
+}
+</style>
+</head>
+<body>
+
+<nav id="nav">
+  <a href="#top" class="nav-logo">
+    <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUAAQEAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAACRyWFlaAAABFAAAABRnWFlaAAABKAAAABRiWFlaAAABPAAAABR3dHB0AAABUAAAABRyVFJDAAABZAAAAChnVFJDAAABZAAAAChiVFJDAAABZAAAAChjcHJ0AAABjAAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJYWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSgAAAPhAAAts9YWVogAAAAAAAA9tYAAQAAAADTLXBhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACAAAAAcAEcAbwBvAGcAbABlACAASQBuAGMALgAgADIAMAAxADb/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCABcAggDASIAAhEBAxEB/8QAHQABAAIDAQEBAQAAAAAAAAAAAAYHBQgJBAMCAf/EAE0QAAEDAwEEBQYICgkDBQAAAAEAAgMEBREGBxIhMQgTQVFhFCIycXSBFRY2N5GxsrMXIzNCUlZydYOhNUiChJKlxNHSJKTBYpSVtPD/xAAZAQEAAwEBAAAAAAAAAAAAAAAAAQIDBAX/xAAxEQACAgEDAgIHCAMAAAAAAAAAAQIRAwQSITFREyIFMkFCcXLBFCMzNDVDYXORsdH/2gAMAwEAAhEDEQA/ANVERF3HEEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEV7aHuVv05sOg1BUWSluUkU72ljw1pdvTFvpFp5Z7lhp9sVpkgkjGgaJpc0tz5S3hkc/yS8aPpLUZJzjiwblFuN7kunxO16bHGKc8lNq+jKiREXsnEEREAREQBERAfqKN8sgjiY573HAa0ZJ9y/s8M1PK6GeKSKRvpMe0tI9xUz2N3a02nU0st1kjgElOWQzSeix2QTx7MjPH3dq9u2682a7XK3ttc8NTLBG8TzRcWkEjdbvduMOPvVdz3VRauLK8REVioREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREARFIdn+o6fS99dcqm0xXRhgdF1Ejw0Akg72S13d3dqzyylCDlCNvt0stBJySbpEeRXPb9rtoq6+npfiFQs66Vse95Q04yQM46rxWF6SFNT0uuKKOmp4oGG2xuLY2BoJ62XjgLzsHpDNLURwZsWxtNrlPp8Dpnp4LG5wndfw0VkiIvVOQIiIAiIgLh/qw/wB6/wBQqeVw/wBWH+9f6hU8vI9Efv8A9kvodms9z5UERF65xhfqNj5ZGxxsc97jhrWjJJ7gF+VauxeyUdLb6rV9zAa2APEDnDgxrR57/rHuPeolLarJStmN0/snvVdC2a5VUVsY4ZDC3rJPe0EAfTlZZ2yGklbu02pA6QDJBpw4H6H8OxQ3WutLrqSskBnkp7fnEVKx2G47C7HpH1+5RqKSSGRssUjo3tOWuacEHwKrUn7S1xXsJHq7RV700BNVxMnpScCohyWjwdwy33qNK3tlWrZb6JdL6gIrOthd1UkvF0jcecx3ecZOefAquta2Y2DU1ZbBvGKN+9C53MsIy318Dj1gqYyd0yGl1R8dK2eW/wB+prRDMyF8+9h7wSBusLuz1L66wsE2m7062T1Ec72xtfvsBA4+tZXY/wDOLa/433L169t3y7l9nj+pLe6hXlsg6ymnLBdNQV3klspjK4DL3ngxg73HsWPpoZampip4WF8srwxjRzLicAK775WUezXRVPR2+NkldOS1hd+fJjzpHd4HDh6gkpVwhFX1MFSbH9yBslxv8cT8ec2KDLQfBznDP0BfC47IqoUzprVeoKxwziOSPcz4BwJGfoVeXa6XG7VTqm41k1TKTnL3ZA8AOQHgEtN0uNpqW1NurJqWUHOY3YB9Y5EeBUVLuTcexltN6RuF31JNYpiKCqhjc94maeGCOHD181ib3QPtV4q7bJI2R9NK6IvaMBxBxlXhs5utFqvcvs8LIrzRxmln6vgHscQQ7HdwOO47yp/X/wAtrz7ZJ9opGTbphxSVmDWb0tpa86kmcy204MbDh80h3Y2es9p8Bkrw2G3TXe80lsg4PqZWszjO6Dzd7hk+5W5tA1BFoex0enNPtbFUuiyHkAmJmfS8XOOePr8FMpNcIiK9rMbDsgijjaa/UTWPcPRZAAAfAl3H6AvHeNkVxhg6603OCu4Z6t7OqJHZg5IPvwq5rKqprKh1RV1EtRM85c+R5c4+8rK6W1Pd9O1jJqCqf1Qdl9O5xMcg7QR/5HFRUu5Nx7GLraWooqqSlq4JIJ4zuvje3BBXxVwbUKCi1Loql1hb4iJo42l+OZjJw5p7y13b61T6tGVoiSpks0poiq1Bp+rvENdDBHTSPYWPaSTusDuz9pfDR2irzqfelpGxwUjDuuqJiQ3PcMcSf5eKsfYZC2o0LcKd5IbLWyMcRzwYowopr7WM9NKdM6bldQ22hHUF8TsPlLeB84dmc8ufEnmqbpNtItSStmWbsak6vLtQsD+4UmR9O/8A+FFtX7P75p2B1W4R1lE0+dNBnLB3uaeI9fEeKizamoZMZmzytlPN4eQ4+9Wtse1bW3Oql07eZjWNfC50L5jvOIHpMcT6QwSePcUe6PNkLa+CpFMNjmiPwh69o9K/CfwZ5THK/wAo6jrt3cYXY3d5uc4xzWL17aWWPVtfboRiFkm/EO5jgHAe7OPcrE6HXz9Wf2ep+5epnKoNoiK8yTJhrzot/FbRl41H8efK/g2jkqeo+CdzrNxud3e644z34K8WyfoxXzVFlpr3qa6/AVLUsEkFM2HrKhzDjBcCQGZHEcz3gLdCeGKohfBPEyWJ4LXse0Oa4dxB5haxbUulQbXqCptWibPRXCGlkdG+vrHudHM4cD1bGEHdzycXce7tXHDLlmqR0Sx448s/d06IdndSH4L1lXRVAbwNTSMexzv7JaQPpx4rXfaps21Rs3vLbfqClYYpcmmrICXQTgc91xAOR2tIBHqIJ2o2CdIiPXupWaX1BaYLZcqhrnUctPIXRTFoLnMIdxa7AJHEg4I4HGbD286RpdabLb1apoWPqYqd1VRPLcmOeNpc0juzxafBxVo5smOW2YeOEo3E5xrMaO0xfNXX6Cx6et8tdXTcmM4BoHNznHg1o7ysOt9OiXoSm0lsuorrNTNbd75GKuolcBvCJ3GKMHsG7h2O9x8F0Zsnhxsxxw3uiudIdEaE0jZdW6qkFQ4DMFsiG6z+JIPO/wAIWeuXRI0VJARbdSahp5cHDqgwzNB7ODWM+tZzpA7fKPZzchp6z26O6Xzq2yTCV5bDTNdgtDscXOI44BGAQc9irLSHS2vYu0TNWactj7e92JJLcJI5Yxw84B73B2OPDIz39/MvHktyNn4UXRWe2PYlq3ZswV9WIrnZnODW19KDhhPISNPFhPvHIZzwVa0TKeSshZVzSQU7pGiWWOPrHMbni4NyN4gdmRnvC6ezxWXVuljHKyG5We7UgOCPMmhkbkEdvEEEHmFzk2q6Uk0TtCvOmHmRzKKoIge/0nwuAdG444ZLS3PjlbYMznw+pnlx7eV0L6tPRNortbKa527abHU0dVE2aCZlmy17HDII/H9ypvbbsxuuy/VLLVWVHl1FURCWjrmw9W2YcnDdyd1zTwIyeBB7Va/Q32sG0XFmz2/1OLfWSE2uWR3CCZxyYuPJrzxHc79rhsVts2fUO0jQ1TY5zHFWs/HUFS4fkZgOGf8A0n0T4HPMBZvLPHOpvgv4cZxuPU5wtBcQ1oJJ4ADtWy+kuiZc7ppuhuN41cLRXVMIllovgzrjBniGl3Wty7GM8OByOOMr+dFXYtcpNaVGpdY2uSlp7FUuip6WdmDNVtPpeLGcwRwLsYJwVsdti19bdnOiaq/127JP+SoqYnBqJiPNb6hzJ7AD4Kc2aW5RgRjxqt0jSfbvsxtOzC4Udpi1f8N3SdnWzU7bf1Ip4/zS53WO4k8m45DJxwzlNgexL8Ktoudw+M3wP5DUNh3PIOv395uc56xuP5qr9SXq5aiv1bfLvUuqa6tmMs0ju0nsHcAMADkAAAtsOgN8kNTe3xfdrTJKUMd3yUgoynVcFSbethn4LNOUF4+NHwv5XWeTdV5B1G55jnb2esdn0cYx2qmluX09Pm5sX73H3Mi00VsEnKFsjLFRlSLL2B7Kvwq3e52/4e+B/Iads2/5J1+/vOxjG+3H81MNsXR0/B5oKs1V8cfhPyaSJnk/wZ1O9vvDc73WuxjOeSzfQG+V+pvYIvvFcHTF+YW8e0Uv3zFjPLJZVFPg0jCLx2aEq8djPRz1Fri2QX68VosNnnG9AXRF9RUM7HNYSA1p7HE8eYBGCqk0XQU901jZbZVnFNV3CCCY5x5j5Gtd/IldPoo44YmRRMbHGxoaxjRgNA5ADsCvqMrhSRXDjUuWa+s6JWgBThr79qd0276YmgDc9+71ROPDKhevuibXUlBJV6M1B8IzRguFFXMbG947myA7u92YIaPEKOas6Su1Wm1VWQthobOymnfGbdLRhzo8EjdeXecXDtII48gFeGzHpC6RvOgfhrWN0t1iudPK6GopWvc50hABEkcYy8tIPjggjKyfjw5uzReFLg0buNHV26vnoK+nlpqqnkdFNDK0tcx4OCCDyIK+CtnpPa00XrvW1Pe9JU9YyUQdTXTTQCNtQWnzHtGS4ndJaS4A4a1VMuyLbVs5pKnSCIikg92n/wCnrf7VF9oKxek18vKL91x/eyqutP8A9PW/2qL7QVi9Jr5eUX7rj+9lXkaj9Sw/LL6HZj/LT+KKsREXrnGEREAREQFw/wBWH+9f6hU8rh/qw/3r/UKnl5Hoj9/+yX0OzWe58qCIi9c4wr701Q26o2Q0dFcq3yGimp/x04kbHu70mfScMDJOOPeqEVz6Ia3VGyGpscZb5TC18IDj+cHb8Z8ByGfArPJ0ReHU8PxI2bfrf/mVP/xT4kbNv1v/AMyp/wDiqpmikgmfDMx0cjHFr2uGC0jmCF+FO19xuXYuiwac2f2S8U90o9WxmencXNElxgLTkEEHAHYSohtrrKCu1ZBUW6sp6uM0TA98ErXtDg9/DIPPGFH9IacrtTXQ0FCWMLYy98kmdxgHLOO84C8l+tVXZbrNba4RiohxvBjw4cRkcR4FFGpdQ3x0M/sf+cW1/wAb7l69e275dy+zx/UvJsf+cW1/xvuXr17bvl3L7PH9Se+PdMNs6jbJrmztdyFU13vHEfUpTt/ledTUEBzuMow8d2S9wP2QoLp6vFrv1DcS0ubTVDJHAdoBBI+hWntzs76+20OoaIddFCzclczj+Ldgtd6s5/xBHxNBeqynkRFcoWRsAleNT18AzuPoi892Q9oH2ionr/5bXn2yT7RVj7BrHPTUVXe6iMsFUBFT5HEsBy53qJwPcVXGv/ltefbJPtFZp3Nl36qMzsVja/X1M53OOGVzfXu4+olT3WemtF3XUE1VetSmkrN1jXQeWwx7gDRjzXNyMjjx71WOzK5R2vW9uqZiBE95heT2B4LQfcSCpFt1s01NqKO8sjJp6yNrXPA5SNGMH1tAx6j3JJeclPymT+JGzb9b/wDMqf8A4p8SNm363/5lT/8AFVMina+5G5di9KqXSlp2d3Kx2/UVHVMFJOYWvrYnSFxaSGjdxnzuzHaqLUnuOh71Q6Xh1DN1ApnsD3xl+7JGCcNyDzzkcBx4qMKYJL2kSdl1bEJeo0Dcpxn8XWSv4eEUZVLOc5zi5xJcTkk9pVybHPm2vHtE/wByxU0oh6zJl0QUt2P/ADi2v+N9y9RJS3Y/84tr/jfcvVpeqyseqPVtuAGu5SAONPHn6FKeh18/Vn9nqfuXqL7bvl3L7PH9SlHQ6+fqz+z1P3L1nL8J/AuvXN1Np1ZLbtm2qLhASJaWz1czCDg7zYXkfUuZa6V7Y/mi1l+4K7/671zUWOk6M01HVE42BSPj206Qcx26TdYW58C7B/kSujkrGSxujkaHMeC1wPaCucGwf559Ifven+2F0hVNX6yLafozlSupNhgjpbHQU0JDo4qaNjCM4IDQBzXLZdJdiuo4NVbK9PXmBwLpKJkUwzndljG48f4mnHhhX1a4TK6d8s9F72daEvd0mul30lZq6unIMtRPSte9+AAMkjjgAD3Lx/gl2ZfqJp//ANiz/Za69LTZprCl1nWa10/FXVtnrmsfUMpC4upJGtDXZYDnddu728OAJIOOGaFsNFq2/XVlrs0N3rq179wQwl7nA9ue7GDknlg5VIYXKNqRaWRJ04nTC10FFa7dBbrdSxUtJTsEcMMTd1kbRyAHYFpJ03IWRbag9ucy2uB7vXl7fqaFNLv0X9TN0dQ1Nq1dK7ULYd6upKiZwp3vPHdieOLcDA84EOPHLRwWtep7fdrRfqu03xr2XGjkMM7HyiQscOY3gSD7ir6eEVK1KyuWTqmjHNc5rg5pLXA5BBwQV0L6NerL9rHZTb7rqKjmiq2OdTiqfj/rWMwBMBz48Qe8tJHNac9H/ZnV7S9bR0LhJFZ6PdmudQ382PPCNp/TfggdwDjxxhb+1dRZtKaYfUTGC22i10uTgbrIYmN4ADwAwAFGqknUfaTgi+vsMmtAelRq3UGpNq9xoLzSzUFPZ5HUtFRSH0GcD1hxwJk4OyOwtGSBlbR7A9tVv2nVt3t0lIy3V9JK6Wlg38malzhr/wBtpwHAcOIxz4YPpa7J/jlpw6psdNvX+1REvjY3zqunGSWY7Xt4lvfxHHIWeH7vJUi+TzwuJpAtwOgN8kNTe3xfdrT9bWdAS7Q7uqrE+QCYmCriZ2ub57Hn3Hq/pC6tT+GzDD66M/09Pm5sX73H3Mi00W/fSu0PdNc7LjT2SA1Nxt1Wytigb6czQ17HMb44fvY7d3HatFHWO9NuQtjrPcBXE4FMaZ/W55Y3cZ7R2KumktlE5k9xsP0BWOOq9TyBp3G0MIJ7ATIcD+R+hW/0xfmFvHtFL98xeHoi7NbpoPSNdcr/AAmmul6fG91K70oImB24HdziXuJHZwB45A93TF+YW8e0Uv3zFzykpZ00apNYuTQ2mnlpqmKpgeY5onh8bxza4HIP0re/Ytt70nrS0U1JerlTWbULIw2eCqeI453jAL4nnDTk8d30hxGCBk6YbMNLxa015atLy3RtrbcJHRiqdF1gY4NJA3cjJJAaOI4kLaGr6KOmKXSNyZR3S5XG/mmf5HJM9sUImAy0bgHAE8Dlx5rfUeG6Uupli3LlF66k0lpXVMTTf9P2u6gN8ySopmSOaD+i4jI9xVU6v6L+zi7xyvs4uFgqXZLDTzmWIO8WSZJHgHNWotu1Lr7QdxmtlHer5YaimkLZqMTvja1wPJ0Z80+8Lbfoj7RdZ68s93ZqqPyuKgdG2nuXUiPrS4HejO6A1xAAORx87jzCxljniW5S4NVOM3TRqrth2Z3/AGZ6ibbLvuVFNUAvoq2IYjqGjGeHNrhkZaeXiCCYQt1unZBSv2T2yeXdE8d6jbC7dyTvQy7zc9gwAf7IWlK6sM3OFswyRUZUgiItTM92n/6et/tUX2grF6TXy8ov3XH97Kq60/8A09b/AGqL7QVi9Jr5eUX7rj+9lXkaj9Sw/LL6HZj/AC0/iirERF65xhERAEREBZOi9qFLYNIQ6crNLw3WGN7nF0tSA12XFw8wxuHDPevdNtW09JC+MbN7WwuaQHCWPhkc/wAiqoReZP0Po5zc3F23b80uv+TqWtzKKinwv4X/AAIiL0zlCkGhdUVelrv5VC3raeUBtRDnAe3sx3Edh/3UfRGr4JToumvoNCa/IrKe4CiuLmjfwQyQ+Dmu4Ox3j6V4o9j9JGTLUaieYOfm04bw9ZcR/JVGipsa6MtuT6ouev1HpXQdkktunHRVtc7mWvD8u/SkeOHD9Efy5qna2pnrKuWrqpXSzzPL5Hu5uJ5lfJFMY0Q5WSfZXVU1Hry21NZUQ08DOt3pJXhjW5ieBkngOJAXq2w1lJXa0kqKGqgqoTBGBJDIHtyBxGRwUORTt5si+KCsfZxtCitVELLfmPmoAC2KUN3jG082uHa36vHsrhEcU1TCbRcVXo/Z5fXeV2u9RUZfx6uGoZuj+w7i31cPUvgzTGzjTrvKrpem3B7OIhdM1+T+wziffw71UiKux9y25di69Batl1Nr6dkMRprdTW57aanHDH4yMbxA4Z+ocPXWGv8A5bXn2yT7RUn2BA/HCrOOHwe/7yNRjX/y2vPtkn2ioiqlQbuJg1bOkde2i7WUWDWLWuG6GCokBLJAOW9ji1w/S9+QVUyK8oqRVOi3Z9lVkuLuvsuoi2F3nAbrZxjwIcF6aDQ2kNKztuN9vDKh8J3mMnLWNyOPoDJcfD+SplFXa+5bcuxNtput36mnbRUQfFbIXbzQ7g6V36RHYOeB/wDhCURWSSVIq3ZbGyi7Wqi2f3WlrLnRU0755iyKWdrHuBiYAQCcniCFU6IijTbDdoKT7K6qmo9eW2prKiGngZ1u9JK8Ma3MTwMk8BxICjCKWrVBOiY7YaykrtaSVFDVQVUJgjAkhkD25A4jI4KR9FO62uy7a7VcLxcqO3UbIKgPqKudsUbSYnAAucQBk8FVaKrjcdpKl5rOg21faDoKt2W6so6PW+mqmpnslZFDDFdYHvke6B4a1rQ7JJJAAHNc+URVxYljVItOe8l+xaspLfta0tW19VBSUsF0gfNNNIGRxtDxlznHgAO8rfz8JWzn9f8ASn/zFP8A81zURVy4VkdtkwyOCoK3ujntmqtmdylt9xilrNOVsm/UQx8ZIJMY62PPA8AAW9oA7uNQotZRUlTM4ycXaOl2j9oeitXUgqbBqS31efSiMoZKz9qN2HD3hSKtq6SigM9bVQU0TeJfLIGNHvK5XouV6Rexm/2h9jdfbl0jdPaetlRadE1sF5vcrSwVUJD6alyCN/e5SOHYBkd54YOmdOyou13jjkqo/KKycB09VOGN33u4ue9xwBk5Lie8leRFvjxLGqRlObm+TfrY7WbJ9nOiaWwUOv8ASUk/5WtqRd6cGomI853p8hyA7AB4qlemBtdptRTxaJ0rc4aq0Q7s1fVU0ofHUyc2Rtc04cxvAnmC7H6K1vRUjgSlubstLK3HajMaM1HdNJanoNRWabqqyilEjP0Xj85jh2tcMgjuK3/0lth2eX3TdDd5dW2K2S1MIfJSVtxhimgfycxzXOB4HPHHEYI4Fc6EVsuFZOpEMjgXF0otN6PoNW/GPRGobDcLfdXudUUdBXxSupZ+biGMcSGO5jsByOA3QoJsv1pc9Aa0otS2sCR8B3ZoHOw2oiPpxk9mRyODggHsUYRXUajtfJVy5tHRPZ7tl2f6zt0c1HfqSgrC0GWhrpWwzRntHnEB48WkjiOXJSS9610hZKWSquuprRSRRt3j1lWwE8M8G5yT3AAkrmQi5npI31NlqH2N6Nn+3mzau2pXa2x19DbdM0dv3qaorpGwvqZ+saC4FxGG4Jw3nwye4ebpZao0zc9iF2o7bqK0VtS+emLYaetjkeQJmk4a0k8lpAiutNFSTRXxm1TPvb6upoK+nr6KZ8FTTStmhlYcOY9pBa4eIIBW72xvpFaT1TbKeh1TXU9gvrGhspqHblNORw32SHzW557rsY5DPNaNItMmKORclITcOh1AqbdpvUcDKipoLTeIcYZJJDHO33EgheO/6o0boq2n4XvFqs1NA3zYTI1hA54ZGOJPbhoK5losPsndmvj/AMFv9Jja8Npl8pqO0xSwaftpcacSDD6iQ8DK4dgxwA7BknngVAiLqjFRVIwlJydsLP6Ev9Hpy9uuFbZYLxEYXR+TzOAaCSDvcWu5Y7u1YBFXLijlg4T6MmEnCSkupbbNren2Pa9mza1tc05BE0YIPf8AkVDdpur/AI6X6C6fB/kHVUrafq+u6zOHPdnO6P0uWOxRZFx6f0XpdPk8THHn4t/7bNsmqy5I7ZPj4IIiLvOcIiIAiIgCIiAIiIAiIgCIiAIiIAiIgClWz256Zts1Y7Ulv8sZI1ghHUtk3SCc8yMdiiqI1aolOi2fjTsu/Vz/ALJn+6fGnZd+rn/ZM/3VTIqeGi29lxU20PRFnhlfZbHNHM8co6dkW93Bzs5x7j6lU11rZbjc6mvnx1tTK6V+OQLjnA8F5kUxikQ5NhERWKhERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAf/9k=" alt="Eigennexus" id="logo-img">
+  </a>
+  <ul class="nav-links">
+    <li><a href="#problem">The problem</a></li>
+    <li><a href="#how">How it works</a></li>
+    <li><a href="#industries">Industries</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact" class="nav-book">Get in touch</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="top">
+  <div class="hero-wrap">
+    <div>
+      <div class="hero-kicker reveal">
+        <div class="kicker-line"></div>
+        <span class="kicker-text">Data Intelligence &amp; AI</span>
+      </div>
+      <h1 class="hero-h1 reveal reveal-d1">
+        Stop losing customers<br>you could have <em>kept.</em>
+      </h1>
+      <p class="hero-p reveal reveal-d2">
+        An ML system that identifies which customers are about to leave, weeks before they do. Your team gets a prioritised list and a reason for every name on it.
+      </p>
+      <div class="btn-row reveal reveal-d3">
+        <a href="#contact" class="btn-fill">
+          Book a scoping call
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </a>
+        <a href="#how" class="btn-line">See how it works</a>
+      </div>
+    </div>
+    <div class="hero-data reveal reveal-d2">
+      <div class="data-card">
+        <div>
+          <div class="data-n">10M<sup>+</sup></div>
+        </div>
+        <div class="data-lbl">Policies and customers scored in production</div>
+      </div>
+      <div class="data-card">
+        <div>
+          <div class="data-n">3.2<sup>x</sup></div>
+        </div>
+        <div class="data-lbl">Model lift vs. baseline in the top risk decile</div>
+      </div>
+      <div class="data-card">
+        <div>
+          <div class="data-n">60<sup>+</sup></div>
+        </div>
+        <div class="data-lbl">Days of lead time before a customer reaches a decision point</div>
+      </div>
+      <div class="data-card">
+        <div>
+          <div class="data-n">18<sup>%</sup></div>
+        </div>
+        <div class="data-lbl">Reduction in churn rate, validated in production</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- THE PROBLEM -->
+<section class="problem" id="problem">
+  <div class="inner">
+    <span class="tag reveal">01 &nbsp; The problem</span>
+    <div class="problem-grid">
+      <div>
+        <h2 class="head reveal">Why churn<br>keeps winning.</h2>
+        <div style="margin-top:2rem">
+          <div class="prob-item reveal reveal-d1">
+            <span class="prob-n">01</span>
+            <div>
+              <div class="prob-title">You find out too late</div>
+              <p class="prob-text">Most teams discover a customer has lapsed after the decision is already made. The retention window is gone before it ever opened.</p>
+            </div>
+          </div>
+          <div class="prob-item reveal reveal-d2">
+            <span class="prob-n">02</span>
+            <div>
+              <div class="prob-title">Broad campaigns miss the point</div>
+              <p class="prob-text">Blanket discounts and mass outreach land on the wrong people. You end up rewarding customers who were never going to leave and missing the ones who were.</p>
+            </div>
+          </div>
+          <div class="prob-item reveal reveal-d3">
+            <span class="prob-n">03</span>
+            <div>
+              <div class="prob-title">No one knows why they left</div>
+              <p class="prob-text">Without specific signals, retention teams operate on gut feel. They cannot personalise outreach because they do not know what drove the decision.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="stats-stack">
+        <div class="stat-box reveal reveal-d1">
+          <div class="stat-big">$1.6<em>T</em></div>
+          <div class="stat-src">Lost globally each year to preventable customer churn</div>
+        </div>
+        <div class="stat-box reveal reveal-d2">
+          <div class="stat-big">5<em>-</em>7<em>x</em></div>
+          <div class="stat-src">More expensive to acquire a new customer than to keep an existing one</div>
+        </div>
+        <div class="stat-box reveal reveal-d3">
+          <div class="stat-big">60<em>-</em>70<em>%</em></div>
+          <div class="stat-src">Of churners show detectable signals weeks before they leave</div>
+        </div>
+        <div class="stat-box reveal reveal-d4">
+          <div class="stat-big">25<em>-</em>95<em>%</em></div>
+          <div class="stat-src">Profit increase from a 5% improvement in retention &mdash; Bain &amp; Co.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how" id="how">
+  <div class="inner">
+    <span class="tag reveal">02 &nbsp; How it works</span>
+    <div class="how-grid">
+      <div>
+        <h2 class="head reveal">From raw data<br>to action in<br><em>four steps.</em></h2>
+        <p class="lead reveal reveal-d1" style="margin-bottom:2.5rem">
+          No new infrastructure. No real-time feeds. It works from whatever data you already have.
+        </p>
+        <div>
+          <div class="step reveal reveal-d1">
+            <span class="step-n">01</span>
+            <div>
+              <div class="step-title">Ingest</div>
+              <p class="step-text">We connect to your existing data exports. Policy records, CRM data, transaction history. Nothing new needs to be built.</p>
+            </div>
+          </div>
+          <div class="step reveal reveal-d2">
+            <span class="step-n">02</span>
+            <div>
+              <div class="step-title">Engineer</div>
+              <p class="step-text">Hundreds of behavioural, financial, and engagement signals are computed automatically. The signals that matter get surfaced.</p>
+            </div>
+          </div>
+          <div class="step reveal reveal-d3">
+            <span class="step-n">03</span>
+            <div>
+              <div class="step-title">Score</div>
+              <p class="step-text">Every customer gets a churn probability. The full book is ranked from highest to lowest risk, automatically.</p>
+            </div>
+          </div>
+          <div class="step reveal reveal-d4">
+            <span class="step-n">04</span>
+            <div>
+              <div class="step-title">Act</div>
+              <p class="step-text">Your team receives a prioritised list with clear reasons why each customer is flagged, weeks before they reach a decision point.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <h3 class="reveal" style="font-family:var(--serif);font-size:1.375rem;font-weight:400;color:var(--white);margin-bottom:1.25rem;">What you receive</h3>
+        <div class="delivs">
+          <div class="deliv reveal reveal-d1">
+            <span class="deliv-tick">✓</span>
+            <div>
+              <div class="deliv-name">Custom churn model</div>
+              <div class="deliv-desc">Calibrated to your data schema, customer base, and business context</div>
+            </div>
+          </div>
+          <div class="deliv reveal reveal-d1">
+            <span class="deliv-tick">✓</span>
+            <div>
+              <div class="deliv-name">Automated scoring pipeline</div>
+              <div class="deliv-desc">Monthly or quarterly scoring that runs without manual effort</div>
+            </div>
+          </div>
+          <div class="deliv reveal reveal-d2">
+            <span class="deliv-tick">✓</span>
+            <div>
+              <div class="deliv-name">Ranked retention list</div>
+              <div class="deliv-desc">Every customer sorted by churn probability, highest risk first</div>
+            </div>
+          </div>
+          <div class="deliv reveal reveal-d2">
+            <span class="deliv-tick">✓</span>
+            <div>
+              <div class="deliv-name">Explainability report</div>
+              <div class="deliv-desc">Specific risk drivers per customer so teams know exactly how to respond</div>
+            </div>
+          </div>
+          <div class="deliv reveal reveal-d3">
+            <span class="deliv-tick">✓</span>
+            <div>
+              <div class="deliv-name">Risk-tier segmentation</div>
+              <div class="deliv-desc">Cohorts for differentiated intervention strategy across your book</div>
+            </div>
+          </div>
+          <div class="deliv reveal reveal-d3">
+            <span class="deliv-tick">✓</span>
+            <div>
+              <div class="deliv-name">Validation and lift tracking</div>
+              <div class="deliv-desc">Ongoing measurement to prove and improve the return over time</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- QUOTE BAND -->
+<div class="quote-band">
+  <div class="quote-inner inner">
+    <p class="q-text reveal">
+      The model surfaced at-risk policyholders more than 60 days before renewal. Our retention team shifted from reactive calling to precision-led outreach. The lift was immediate and measurable.
+    </p>
+    <div class="q-metrics">
+      <div class="q-m reveal reveal-d1">
+        <div class="q-n">18%</div>
+        <div class="q-l">Churn<br>reduction</div>
+      </div>
+      <div class="q-m reveal reveal-d2">
+        <div class="q-n">3.2x</div>
+        <div class="q-l">Model lift<br>vs. baseline</div>
+      </div>
+      <div class="q-m reveal reveal-d3">
+        <div class="q-n">8wk</div>
+        <div class="q-l">Time to first<br>scored output</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- INDUSTRIES -->
+<section class="industries" id="industries">
+  <div class="inner">
+    <span class="tag reveal">03 &nbsp; Industries</span>
+    <h2 class="head reveal">Where the model<br>delivers results.</h2>
+    <p class="lead reveal reveal-d1">Built for insurance. Calibrated for any industry where customer data exists and retention matters.</p>
+    <div class="ind-grid">
+      <div class="ind-card reveal">
+        <div class="ind-rate">15 to 25% annual attrition</div>
+        <div class="ind-name">Insurance</div>
+        <p class="ind-desc">Motor, health, commercial vehicle, life, crop, and insurtech. Every active policy scored at renewal using signals from your own data.</p>
+      </div>
+      <div class="ind-card reveal reveal-d1">
+        <div class="ind-rate">15 to 20% annual churn</div>
+        <div class="ind-name">Banking and Lending</div>
+        <p class="ind-desc">Predict account closure, credit product lapse, and digital disengagement before balance transfers begin.</p>
+      </div>
+      <div class="ind-card reveal reveal-d2">
+        <div class="ind-rate">60 to 80% annual churn</div>
+        <div class="ind-name">E-commerce and Retail</div>
+        <p class="ind-desc">Score dormant buyers and subscription drop-offs. Intervene with precision before they buy from someone else.</p>
+      </div>
+      <div class="ind-card reveal reveal-d1">
+        <div class="ind-rate">10 to 25% member churn</div>
+        <div class="ind-name">Healthcare and Pharma</div>
+        <p class="ind-desc">Identify disengaging members and lapsing plan holders. Get ahead of care discontinuation with targeted outreach.</p>
+      </div>
+      <div class="ind-card reveal reveal-d2">
+        <div class="ind-rate">30 to 50% learner dropout</div>
+        <div class="ind-name">EdTech and Learning</div>
+        <p class="ind-desc">Flag disengaging learners weeks before non-renewal. Re-engage at scale while there is still time to act.</p>
+      </div>
+      <div class="ind-card reveal reveal-d3" style="border-left:2px solid var(--teal)">
+        <div class="ind-rate" style="opacity:.5">Your industry</div>
+        <div class="ind-name">High churn, data rich</div>
+        <p class="ind-desc">If you have customer data and a retention problem, the model can be calibrated for your context. Come as you are.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="inner">
+    <span class="tag reveal">04 &nbsp; About</span>
+    <div class="about-grid">
+      <div>
+        <h2 class="head reveal">Built by a practitioner.<br><em>Proven in production.</em></h2>
+        <p class="about-p reveal reveal-d1">
+          Eigennexus is an independent ML consulting firm. <strong>Rehan Qureshi</strong> founded it after spending years building production-grade retention models across India and the US, scoring more than ten million policies in the process.
+        </p>
+        <p class="about-p reveal reveal-d2">
+          The work here is not theoretical. Every model and pipeline has been built to operate at scale, under real business constraints, with real accountability for the numbers. The flagship engagement is retention intelligence because that is where the evidence is clearest and the return comes fastest.
+        </p>
+        <p class="about-p reveal reveal-d3">
+          The firm covers the full ML lifecycle: data engineering, predictive modelling, deep learning, and business intelligence. The engagement model is simple. You share your data, we build on it, and you see results before committing to anything further.
+        </p>
+        <div class="pilot-box reveal reveal-d3">
+          <div class="pilot-tag">The pilot offer</div>
+          <p class="pilot-text">Every engagement starts with a <strong>30-day no-cost pilot</strong> on a sample of your data. You see the model performance before you commit to anything.</p>
+        </div>
+      </div>
+      <div>
+        <div class="creds reveal reveal-d1">
+          <div class="cred">
+            <div class="cred-n">5<em>+</em></div>
+            <div class="cred-l">Years in data science</div>
+          </div>
+          <div class="cred">
+            <div class="cred-n">3<em>+</em></div>
+            <div class="cred-l">Years in retention analytics</div>
+          </div>
+          <div class="cred">
+            <div class="cred-n">10M<em>+</em></div>
+            <div class="cred-l">Customers scored in production</div>
+          </div>
+          <div class="cred">
+            <div class="cred-n">2</div>
+            <div class="cred-l">Markets: India and US</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="inner">
+    <span class="tag reveal">05 &nbsp; Contact</span>
+    <div class="contact-grid">
+      <div>
+        <h2 class="head reveal">Ready to see what<br>your data reveals?</h2>
+        <p class="contact-p reveal reveal-d1">
+          Start with a conversation. We will ask about your current retention process, work out where the model fits, and offer a 30-day pilot on a sample of your data. No infrastructure changes needed.
+        </p>
+        <div class="reveal reveal-d2">
+          <div class="c-detail">
+            <div class="c-icon">
+              <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            </div>
+            <div class="c-txt"><a href="mailto:rq9195@gmail.com">rq9195@gmail.com</a></div>
+          </div>
+          <div class="c-detail">
+            <div class="c-icon">
+              <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.6a16 16 0 0 0 5.55 5.55l1.83-1.83a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 14.9z"/></svg>
+            </div>
+            <div class="c-txt"><a href="tel:+919175316802">+91 91753 16802</a></div>
+          </div>
+          <div class="c-detail">
+            <div class="c-icon">
+              <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+            </div>
+            <div class="c-txt">eigennexus.ai</div>
+          </div>
+        </div>
+      </div>
+      <div class="form-box reveal reveal-d1">
+        <h3>Request a scoping call</h3>
+        <form id="the-form" action="https://formspree.io/f/REPLACE_WITH_YOUR_FORMSPREE_ID" method="POST" onsubmit="handleSubmit(event)">
+          <div class="f-row">
+            <label>Name</label>
+            <input type="text" name="name" id="f-name" placeholder="Your full name" required>
+          </div>
+          <div class="f-row">
+            <label>Company</label>
+            <input type="text" name="company" id="f-company" placeholder="Company or organisation">
+          </div>
+          <div class="f-row">
+            <label>Email</label>
+            <input type="email" name="email" id="f-email" placeholder="Work email address" required>
+          </div>
+          <div class="f-row">
+            <label>Phone (optional)</label>
+            <input type="tel" name="phone" id="f-phone" placeholder="+91 or international">
+          </div>
+          <div class="f-row">
+            <label>Industry</label>
+            <select name="industry" id="f-industry">
+              <option value="">Select your industry</option>
+              <option>Insurance</option>
+              <option>Banking and Lending</option>
+              <option>E-commerce and Retail</option>
+              <option>Healthcare and Pharma</option>
+              <option>EdTech and Learning</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div class="f-row">
+            <label>What does your current retention process look like? (optional)</label>
+            <textarea name="message" id="f-message" placeholder="Tell us a bit about the challenge..."></textarea>
+          </div>
+          <!-- Honeypot spam filter -->
+          <input type="text" name="_gotcha" style="display:none">
+          <input type="hidden" name="_subject" value="New scoping call request — Eigennexus">
+          <button type="submit" class="f-submit" id="f-submit-btn">Request a scoping call</button>
+        </form>
+        <div class="f-success" id="form-success">
+          <div class="f-success-icon">&#10003;</div>
+          <div class="f-success-msg">Message received.</div>
+          <div class="f-success-sub">Rehan will be in touch within 24 hours.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="foot-inner">
+    <a href="#top" class="foot-logo">
+      <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUAAQEAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAACRyWFlaAAABFAAAABRnWFlaAAABKAAAABRiWFlaAAABPAAAABR3dHB0AAABUAAAABRyVFJDAAABZAAAAChnVFJDAAABZAAAAChiVFJDAAABZAAAAChjcHJ0AAABjAAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJYWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSgAAAPhAAAts9YWVogAAAAAAAA9tYAAQAAAADTLXBhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACAAAAAcAEcAbwBvAGcAbABlACAASQBuAGMALgAgADIAMAAxADb/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCABcAggDASIAAhEBAxEB/8QAHQABAAIDAQEBAQAAAAAAAAAAAAYHBQgJBAMCAf/EAE0QAAEDAwEEBQYICgkDBQAAAAEAAgMEBREGBxIhMQgTQVFhFCIycXSBFRY2N5GxsrMXIzNCUlZydYOhNUiChJKlxNHSJKTBYpSVtPD/xAAZAQEAAwEBAAAAAAAAAAAAAAAAAQIDBAX/xAAxEQACAgEDAgIHCAMAAAAAAAAAAQIRAwQSITFREyIFMkFCcXLBFCMzNDVDYXORsdH/2gAMAwEAAhEDEQA/ANVERF3HEEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEV7aHuVv05sOg1BUWSluUkU72ljw1pdvTFvpFp5Z7lhp9sVpkgkjGgaJpc0tz5S3hkc/yS8aPpLUZJzjiwblFuN7kunxO16bHGKc8lNq+jKiREXsnEEREAREQBERAfqKN8sgjiY573HAa0ZJ9y/s8M1PK6GeKSKRvpMe0tI9xUz2N3a02nU0st1kjgElOWQzSeix2QTx7MjPH3dq9u2682a7XK3ttc8NTLBG8TzRcWkEjdbvduMOPvVdz3VRauLK8REVioREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREARFIdn+o6fS99dcqm0xXRhgdF1Ejw0Akg72S13d3dqzyylCDlCNvt0stBJySbpEeRXPb9rtoq6+npfiFQs66Vse95Q04yQM46rxWF6SFNT0uuKKOmp4oGG2xuLY2BoJ62XjgLzsHpDNLURwZsWxtNrlPp8Dpnp4LG5wndfw0VkiIvVOQIiIAiIgLh/qw/wB6/wBQqeVw/wBWH+9f6hU8vI9Efv8A9kvodms9z5UERF65xhfqNj5ZGxxsc97jhrWjJJ7gF+VauxeyUdLb6rV9zAa2APEDnDgxrR57/rHuPeolLarJStmN0/snvVdC2a5VUVsY4ZDC3rJPe0EAfTlZZ2yGklbu02pA6QDJBpw4H6H8OxQ3WutLrqSskBnkp7fnEVKx2G47C7HpH1+5RqKSSGRssUjo3tOWuacEHwKrUn7S1xXsJHq7RV700BNVxMnpScCohyWjwdwy33qNK3tlWrZb6JdL6gIrOthd1UkvF0jcecx3ecZOefAquta2Y2DU1ZbBvGKN+9C53MsIy318Dj1gqYyd0yGl1R8dK2eW/wB+prRDMyF8+9h7wSBusLuz1L66wsE2m7062T1Ec72xtfvsBA4+tZXY/wDOLa/433L169t3y7l9nj+pLe6hXlsg6ymnLBdNQV3klspjK4DL3ngxg73HsWPpoZampip4WF8srwxjRzLicAK775WUezXRVPR2+NkldOS1hd+fJjzpHd4HDh6gkpVwhFX1MFSbH9yBslxv8cT8ec2KDLQfBznDP0BfC47IqoUzprVeoKxwziOSPcz4BwJGfoVeXa6XG7VTqm41k1TKTnL3ZA8AOQHgEtN0uNpqW1NurJqWUHOY3YB9Y5EeBUVLuTcexltN6RuF31JNYpiKCqhjc94maeGCOHD181ib3QPtV4q7bJI2R9NK6IvaMBxBxlXhs5utFqvcvs8LIrzRxmln6vgHscQQ7HdwOO47yp/X/wAtrz7ZJ9opGTbphxSVmDWb0tpa86kmcy204MbDh80h3Y2es9p8Bkrw2G3TXe80lsg4PqZWszjO6Dzd7hk+5W5tA1BFoex0enNPtbFUuiyHkAmJmfS8XOOePr8FMpNcIiK9rMbDsgijjaa/UTWPcPRZAAAfAl3H6AvHeNkVxhg6603OCu4Z6t7OqJHZg5IPvwq5rKqprKh1RV1EtRM85c+R5c4+8rK6W1Pd9O1jJqCqf1Qdl9O5xMcg7QR/5HFRUu5Nx7GLraWooqqSlq4JIJ4zuvje3BBXxVwbUKCi1Loql1hb4iJo42l+OZjJw5p7y13b61T6tGVoiSpks0poiq1Bp+rvENdDBHTSPYWPaSTusDuz9pfDR2irzqfelpGxwUjDuuqJiQ3PcMcSf5eKsfYZC2o0LcKd5IbLWyMcRzwYowopr7WM9NKdM6bldQ22hHUF8TsPlLeB84dmc8ufEnmqbpNtItSStmWbsak6vLtQsD+4UmR9O/8A+FFtX7P75p2B1W4R1lE0+dNBnLB3uaeI9fEeKizamoZMZmzytlPN4eQ4+9Wtse1bW3Oql07eZjWNfC50L5jvOIHpMcT6QwSePcUe6PNkLa+CpFMNjmiPwh69o9K/CfwZ5THK/wAo6jrt3cYXY3d5uc4xzWL17aWWPVtfboRiFkm/EO5jgHAe7OPcrE6HXz9Wf2ep+5epnKoNoiK8yTJhrzot/FbRl41H8efK/g2jkqeo+CdzrNxud3e644z34K8WyfoxXzVFlpr3qa6/AVLUsEkFM2HrKhzDjBcCQGZHEcz3gLdCeGKohfBPEyWJ4LXse0Oa4dxB5haxbUulQbXqCptWibPRXCGlkdG+vrHudHM4cD1bGEHdzycXce7tXHDLlmqR0Sx448s/d06IdndSH4L1lXRVAbwNTSMexzv7JaQPpx4rXfaps21Rs3vLbfqClYYpcmmrICXQTgc91xAOR2tIBHqIJ2o2CdIiPXupWaX1BaYLZcqhrnUctPIXRTFoLnMIdxa7AJHEg4I4HGbD286RpdabLb1apoWPqYqd1VRPLcmOeNpc0juzxafBxVo5smOW2YeOEo3E5xrMaO0xfNXX6Cx6et8tdXTcmM4BoHNznHg1o7ysOt9OiXoSm0lsuorrNTNbd75GKuolcBvCJ3GKMHsG7h2O9x8F0Zsnhxsxxw3uiudIdEaE0jZdW6qkFQ4DMFsiG6z+JIPO/wAIWeuXRI0VJARbdSahp5cHDqgwzNB7ODWM+tZzpA7fKPZzchp6z26O6Xzq2yTCV5bDTNdgtDscXOI44BGAQc9irLSHS2vYu0TNWactj7e92JJLcJI5Yxw84B73B2OPDIz39/MvHktyNn4UXRWe2PYlq3ZswV9WIrnZnODW19KDhhPISNPFhPvHIZzwVa0TKeSshZVzSQU7pGiWWOPrHMbni4NyN4gdmRnvC6ezxWXVuljHKyG5We7UgOCPMmhkbkEdvEEEHmFzk2q6Uk0TtCvOmHmRzKKoIge/0nwuAdG444ZLS3PjlbYMznw+pnlx7eV0L6tPRNortbKa527abHU0dVE2aCZlmy17HDII/H9ypvbbsxuuy/VLLVWVHl1FURCWjrmw9W2YcnDdyd1zTwIyeBB7Va/Q32sG0XFmz2/1OLfWSE2uWR3CCZxyYuPJrzxHc79rhsVts2fUO0jQ1TY5zHFWs/HUFS4fkZgOGf8A0n0T4HPMBZvLPHOpvgv4cZxuPU5wtBcQ1oJJ4ADtWy+kuiZc7ppuhuN41cLRXVMIllovgzrjBniGl3Wty7GM8OByOOMr+dFXYtcpNaVGpdY2uSlp7FUuip6WdmDNVtPpeLGcwRwLsYJwVsdti19bdnOiaq/127JP+SoqYnBqJiPNb6hzJ7AD4Kc2aW5RgRjxqt0jSfbvsxtOzC4Udpi1f8N3SdnWzU7bf1Ip4/zS53WO4k8m45DJxwzlNgexL8Ktoudw+M3wP5DUNh3PIOv395uc56xuP5qr9SXq5aiv1bfLvUuqa6tmMs0ju0nsHcAMADkAAAtsOgN8kNTe3xfdrTJKUMd3yUgoynVcFSbethn4LNOUF4+NHwv5XWeTdV5B1G55jnb2esdn0cYx2qmluX09Pm5sX73H3Mi00VsEnKFsjLFRlSLL2B7Kvwq3e52/4e+B/Iads2/5J1+/vOxjG+3H81MNsXR0/B5oKs1V8cfhPyaSJnk/wZ1O9vvDc73WuxjOeSzfQG+V+pvYIvvFcHTF+YW8e0Uv3zFjPLJZVFPg0jCLx2aEq8djPRz1Fri2QX68VosNnnG9AXRF9RUM7HNYSA1p7HE8eYBGCqk0XQU901jZbZVnFNV3CCCY5x5j5Gtd/IldPoo44YmRRMbHGxoaxjRgNA5ADsCvqMrhSRXDjUuWa+s6JWgBThr79qd0276YmgDc9+71ROPDKhevuibXUlBJV6M1B8IzRguFFXMbG947myA7u92YIaPEKOas6Su1Wm1VWQthobOymnfGbdLRhzo8EjdeXecXDtII48gFeGzHpC6RvOgfhrWN0t1iudPK6GopWvc50hABEkcYy8tIPjggjKyfjw5uzReFLg0buNHV26vnoK+nlpqqnkdFNDK0tcx4OCCDyIK+CtnpPa00XrvW1Pe9JU9YyUQdTXTTQCNtQWnzHtGS4ndJaS4A4a1VMuyLbVs5pKnSCIikg92n/wCnrf7VF9oKxek18vKL91x/eyqutP8A9PW/2qL7QVi9Jr5eUX7rj+9lXkaj9Sw/LL6HZj/LT+KKsREXrnGEREAREQFw/wBWH+9f6hU8rh/qw/3r/UKnl5Hoj9/+yX0OzWe58qCIi9c4wr701Q26o2Q0dFcq3yGimp/x04kbHu70mfScMDJOOPeqEVz6Ia3VGyGpscZb5TC18IDj+cHb8Z8ByGfArPJ0ReHU8PxI2bfrf/mVP/xT4kbNv1v/AMyp/wDiqpmikgmfDMx0cjHFr2uGC0jmCF+FO19xuXYuiwac2f2S8U90o9WxmencXNElxgLTkEEHAHYSohtrrKCu1ZBUW6sp6uM0TA98ErXtDg9/DIPPGFH9IacrtTXQ0FCWMLYy98kmdxgHLOO84C8l+tVXZbrNba4RiohxvBjw4cRkcR4FFGpdQ3x0M/sf+cW1/wAb7l69e275dy+zx/UvJsf+cW1/xvuXr17bvl3L7PH9Se+PdMNs6jbJrmztdyFU13vHEfUpTt/ledTUEBzuMow8d2S9wP2QoLp6vFrv1DcS0ubTVDJHAdoBBI+hWntzs76+20OoaIddFCzclczj+Ldgtd6s5/xBHxNBeqynkRFcoWRsAleNT18AzuPoi892Q9oH2ionr/5bXn2yT7RVj7BrHPTUVXe6iMsFUBFT5HEsBy53qJwPcVXGv/ltefbJPtFZp3Nl36qMzsVja/X1M53OOGVzfXu4+olT3WemtF3XUE1VetSmkrN1jXQeWwx7gDRjzXNyMjjx71WOzK5R2vW9uqZiBE95heT2B4LQfcSCpFt1s01NqKO8sjJp6yNrXPA5SNGMH1tAx6j3JJeclPymT+JGzb9b/wDMqf8A4p8SNm363/5lT/8AFVMina+5G5di9KqXSlp2d3Kx2/UVHVMFJOYWvrYnSFxaSGjdxnzuzHaqLUnuOh71Q6Xh1DN1ApnsD3xl+7JGCcNyDzzkcBx4qMKYJL2kSdl1bEJeo0Dcpxn8XWSv4eEUZVLOc5zi5xJcTkk9pVybHPm2vHtE/wByxU0oh6zJl0QUt2P/ADi2v+N9y9RJS3Y/84tr/jfcvVpeqyseqPVtuAGu5SAONPHn6FKeh18/Vn9nqfuXqL7bvl3L7PH9SlHQ6+fqz+z1P3L1nL8J/AuvXN1Np1ZLbtm2qLhASJaWz1czCDg7zYXkfUuZa6V7Y/mi1l+4K7/671zUWOk6M01HVE42BSPj206Qcx26TdYW58C7B/kSujkrGSxujkaHMeC1wPaCucGwf559Ifven+2F0hVNX6yLafozlSupNhgjpbHQU0JDo4qaNjCM4IDQBzXLZdJdiuo4NVbK9PXmBwLpKJkUwzndljG48f4mnHhhX1a4TK6d8s9F72daEvd0mul30lZq6unIMtRPSte9+AAMkjjgAD3Lx/gl2ZfqJp//ANiz/Za69LTZprCl1nWa10/FXVtnrmsfUMpC4upJGtDXZYDnddu728OAJIOOGaFsNFq2/XVlrs0N3rq179wQwl7nA9ue7GDknlg5VIYXKNqRaWRJ04nTC10FFa7dBbrdSxUtJTsEcMMTd1kbRyAHYFpJ03IWRbag9ucy2uB7vXl7fqaFNLv0X9TN0dQ1Nq1dK7ULYd6upKiZwp3vPHdieOLcDA84EOPHLRwWtep7fdrRfqu03xr2XGjkMM7HyiQscOY3gSD7ir6eEVK1KyuWTqmjHNc5rg5pLXA5BBwQV0L6NerL9rHZTb7rqKjmiq2OdTiqfj/rWMwBMBz48Qe8tJHNac9H/ZnV7S9bR0LhJFZ6PdmudQ382PPCNp/TfggdwDjxxhb+1dRZtKaYfUTGC22i10uTgbrIYmN4ADwAwAFGqknUfaTgi+vsMmtAelRq3UGpNq9xoLzSzUFPZ5HUtFRSH0GcD1hxwJk4OyOwtGSBlbR7A9tVv2nVt3t0lIy3V9JK6Wlg38malzhr/wBtpwHAcOIxz4YPpa7J/jlpw6psdNvX+1REvjY3zqunGSWY7Xt4lvfxHHIWeH7vJUi+TzwuJpAtwOgN8kNTe3xfdrT9bWdAS7Q7uqrE+QCYmCriZ2ub57Hn3Hq/pC6tT+GzDD66M/09Pm5sX73H3Mi00W/fSu0PdNc7LjT2SA1Nxt1Wytigb6czQ17HMb44fvY7d3HatFHWO9NuQtjrPcBXE4FMaZ/W55Y3cZ7R2KumktlE5k9xsP0BWOOq9TyBp3G0MIJ7ATIcD+R+hW/0xfmFvHtFL98xeHoi7NbpoPSNdcr/AAmmul6fG91K70oImB24HdziXuJHZwB45A93TF+YW8e0Uv3zFzykpZ00apNYuTQ2mnlpqmKpgeY5onh8bxza4HIP0re/Ytt70nrS0U1JerlTWbULIw2eCqeI453jAL4nnDTk8d30hxGCBk6YbMNLxa015atLy3RtrbcJHRiqdF1gY4NJA3cjJJAaOI4kLaGr6KOmKXSNyZR3S5XG/mmf5HJM9sUImAy0bgHAE8Dlx5rfUeG6Uupli3LlF66k0lpXVMTTf9P2u6gN8ySopmSOaD+i4jI9xVU6v6L+zi7xyvs4uFgqXZLDTzmWIO8WSZJHgHNWotu1Lr7QdxmtlHer5YaimkLZqMTvja1wPJ0Z80+8Lbfoj7RdZ68s93ZqqPyuKgdG2nuXUiPrS4HejO6A1xAAORx87jzCxljniW5S4NVOM3TRqrth2Z3/AGZ6ibbLvuVFNUAvoq2IYjqGjGeHNrhkZaeXiCCYQt1unZBSv2T2yeXdE8d6jbC7dyTvQy7zc9gwAf7IWlK6sM3OFswyRUZUgiItTM92n/6et/tUX2grF6TXy8ov3XH97Kq60/8A09b/AGqL7QVi9Jr5eUX7rj+9lXkaj9Sw/LL6HZj/AC0/iirERF65xhERAEREBZOi9qFLYNIQ6crNLw3WGN7nF0tSA12XFw8wxuHDPevdNtW09JC+MbN7WwuaQHCWPhkc/wAiqoReZP0Po5zc3F23b80uv+TqWtzKKinwv4X/AAIiL0zlCkGhdUVelrv5VC3raeUBtRDnAe3sx3Edh/3UfRGr4JToumvoNCa/IrKe4CiuLmjfwQyQ+Dmu4Ox3j6V4o9j9JGTLUaieYOfm04bw9ZcR/JVGipsa6MtuT6ouev1HpXQdkktunHRVtc7mWvD8u/SkeOHD9Efy5qna2pnrKuWrqpXSzzPL5Hu5uJ5lfJFMY0Q5WSfZXVU1Hry21NZUQ08DOt3pJXhjW5ieBkngOJAXq2w1lJXa0kqKGqgqoTBGBJDIHtyBxGRwUORTt5si+KCsfZxtCitVELLfmPmoAC2KUN3jG082uHa36vHsrhEcU1TCbRcVXo/Z5fXeV2u9RUZfx6uGoZuj+w7i31cPUvgzTGzjTrvKrpem3B7OIhdM1+T+wziffw71UiKux9y25di69Batl1Nr6dkMRprdTW57aanHDH4yMbxA4Z+ocPXWGv8A5bXn2yT7RUn2BA/HCrOOHwe/7yNRjX/y2vPtkn2ioiqlQbuJg1bOkde2i7WUWDWLWuG6GCokBLJAOW9ji1w/S9+QVUyK8oqRVOi3Z9lVkuLuvsuoi2F3nAbrZxjwIcF6aDQ2kNKztuN9vDKh8J3mMnLWNyOPoDJcfD+SplFXa+5bcuxNtput36mnbRUQfFbIXbzQ7g6V36RHYOeB/wDhCURWSSVIq3ZbGyi7Wqi2f3WlrLnRU0755iyKWdrHuBiYAQCcniCFU6IijTbDdoKT7K6qmo9eW2prKiGngZ1u9JK8Ma3MTwMk8BxICjCKWrVBOiY7YaykrtaSVFDVQVUJgjAkhkD25A4jI4KR9FO62uy7a7VcLxcqO3UbIKgPqKudsUbSYnAAucQBk8FVaKrjcdpKl5rOg21faDoKt2W6so6PW+mqmpnslZFDDFdYHvke6B4a1rQ7JJJAAHNc+URVxYljVItOe8l+xaspLfta0tW19VBSUsF0gfNNNIGRxtDxlznHgAO8rfz8JWzn9f8ASn/zFP8A81zURVy4VkdtkwyOCoK3ujntmqtmdylt9xilrNOVsm/UQx8ZIJMY62PPA8AAW9oA7uNQotZRUlTM4ycXaOl2j9oeitXUgqbBqS31efSiMoZKz9qN2HD3hSKtq6SigM9bVQU0TeJfLIGNHvK5XouV6Rexm/2h9jdfbl0jdPaetlRadE1sF5vcrSwVUJD6alyCN/e5SOHYBkd54YOmdOyou13jjkqo/KKycB09VOGN33u4ue9xwBk5Lie8leRFvjxLGqRlObm+TfrY7WbJ9nOiaWwUOv8ASUk/5WtqRd6cGomI853p8hyA7AB4qlemBtdptRTxaJ0rc4aq0Q7s1fVU0ofHUyc2Rtc04cxvAnmC7H6K1vRUjgSlubstLK3HajMaM1HdNJanoNRWabqqyilEjP0Xj85jh2tcMgjuK3/0lth2eX3TdDd5dW2K2S1MIfJSVtxhimgfycxzXOB4HPHHEYI4Fc6EVsuFZOpEMjgXF0otN6PoNW/GPRGobDcLfdXudUUdBXxSupZ+biGMcSGO5jsByOA3QoJsv1pc9Aa0otS2sCR8B3ZoHOw2oiPpxk9mRyODggHsUYRXUajtfJVy5tHRPZ7tl2f6zt0c1HfqSgrC0GWhrpWwzRntHnEB48WkjiOXJSS9610hZKWSquuprRSRRt3j1lWwE8M8G5yT3AAkrmQi5npI31NlqH2N6Nn+3mzau2pXa2x19DbdM0dv3qaorpGwvqZ+saC4FxGG4Jw3nwye4ebpZao0zc9iF2o7bqK0VtS+emLYaetjkeQJmk4a0k8lpAiutNFSTRXxm1TPvb6upoK+nr6KZ8FTTStmhlYcOY9pBa4eIIBW72xvpFaT1TbKeh1TXU9gvrGhspqHblNORw32SHzW557rsY5DPNaNItMmKORclITcOh1AqbdpvUcDKipoLTeIcYZJJDHO33EgheO/6o0boq2n4XvFqs1NA3zYTI1hA54ZGOJPbhoK5losPsndmvj/AMFv9Jja8Npl8pqO0xSwaftpcacSDD6iQ8DK4dgxwA7BknngVAiLqjFRVIwlJydsLP6Ev9Hpy9uuFbZYLxEYXR+TzOAaCSDvcWu5Y7u1YBFXLijlg4T6MmEnCSkupbbNren2Pa9mza1tc05BE0YIPf8AkVDdpur/AI6X6C6fB/kHVUrafq+u6zOHPdnO6P0uWOxRZFx6f0XpdPk8THHn4t/7bNsmqy5I7ZPj4IIiLvOcIiIAiIgCIiAIiIAiIgCIiAIiIAiIgClWz256Zts1Y7Ulv8sZI1ghHUtk3SCc8yMdiiqI1aolOi2fjTsu/Vz/ALJn+6fGnZd+rn/ZM/3VTIqeGi29lxU20PRFnhlfZbHNHM8co6dkW93Bzs5x7j6lU11rZbjc6mvnx1tTK6V+OQLjnA8F5kUxikQ5NhERWKhERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAf/9k=" alt="Eigennexus">
+    </a>
+    <span class="foot-tagline">Where mathematical rigour meets business reality.</span>
+    <span class="foot-copy">&copy; 2025 Eigennexus &nbsp;&middot;&nbsp; rq9195@gmail.com</span>
+  </div>
+</footer>
+
+<script>
+// ── NAV SCROLL ──
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => nav.classList.toggle('stuck', scrollY > 50), {passive:true});
+
+// ── REVEAL ON SCROLL ──
+const els = document.querySelectorAll('.reveal');
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('in'); });
+}, {threshold:.1});
+els.forEach(el => io.observe(el));
+
+// Trigger hero immediately
+document.querySelectorAll('.hero .reveal').forEach((el,i) => {
+  setTimeout(() => el.classList.add('in'), i * 110);
+});
+
+// ── FORM SUBMIT via Formspree ──
+async function handleSubmit(e) {
+  e.preventDefault();
+  const btn  = document.getElementById('f-submit-btn');
+  const form = document.getElementById('the-form');
+  const name  = document.getElementById('f-name').value.trim();
+  const email = document.getElementById('f-email').value.trim();
+
+  if(!name || !email) {
+    alert('Please enter your name and email address.');
+    return;
+  }
+
+  btn.textContent = 'Sending...';
+  btn.disabled = true;
+
+  try {
+    const res = await fetch(form.action, {
+      method: 'POST',
+      body: new FormData(form),
+      headers: { 'Accept': 'application/json' }
+    });
+
+    if(res.ok) {
+      // Fire GA4 event on successful submission
+      if(typeof gtag !== 'undefined') {
+        gtag('event', 'scoping_call_request', {
+          event_category: 'Form',
+          event_label: document.getElementById('f-industry').value || 'Unknown'
+        });
+      }
+      form.style.display = 'none';
+      document.getElementById('form-success').style.display = 'block';
+    } else {
+      btn.textContent = 'Request a scoping call';
+      btn.disabled = false;
+      alert('Something went wrong. Please email rq9195@gmail.com directly.');
+    }
+  } catch(err) {
+    btn.textContent = 'Request a scoping call';
+    btn.disabled = false;
+    alert('Something went wrong. Please email rq9195@gmail.com directly.');
+  }
+}
+</script>
+
+</body>
+</html>
